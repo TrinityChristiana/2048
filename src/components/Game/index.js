@@ -106,6 +106,8 @@ const Game = () => {
 
   const handlers = useSwipeable({
     onSwiped: (eventData) => handleAction(eventData.dir),
+    preventDefaultTouchmoveEvent: false,
+    trackTouch: true
   });
 
   const handleKeyDown = useCallback(

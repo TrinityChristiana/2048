@@ -1,0 +1,19 @@
+$colormap: (
+  '2': #ede4da,
+  '4': orange,
+  '8': yellow,
+  '16': green,
+  '32': blue,
+  '64': purple,
+  '128': pink,
+  '256': cyan,
+  '512': grey,
+  '1024': black,
+  '2048': white,
+);
+
+@each $name, $color in $colormap {
+  .tile-num-#{$name} {
+    background-color: $color;
+  }
+} ;
