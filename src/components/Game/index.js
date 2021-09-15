@@ -107,7 +107,7 @@ const Game = () => {
   const handlers = useSwipeable({
     onSwiped: (eventData) => handleAction(eventData.dir),
     preventDefaultTouchmoveEvent: false,
-    trackTouch: true
+    trackTouch: true,
   });
 
   const handleKeyDown = useCallback(
@@ -145,7 +145,7 @@ const Game = () => {
   }, [handleKeyDown]);
 
   return (
-    <div {...handlers}>
+    <div {...handlers} className='d-flex flex-column align-items-center' style={{ width: '100%' }}>
       <Board tileData={tileData} gameData={gameData} />
       <Buttons handleAction={handleAction} tileData={tileData} setTileData={setTileData} gameData={gameData} />
     </div>
