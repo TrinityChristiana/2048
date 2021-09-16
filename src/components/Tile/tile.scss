@@ -1,56 +1,8 @@
-$colormap: (
-  '0': (
-    #ccc1b3,
-    #ccc1b3,
-  ),
-  '2': (
-    #ede4da,
-    #766e65,
-  ),
-  '4': (
-    #eee1c9,
-    #766e65,
-  ),
-  '8': (
-    #f3b379,
-    #766e65,
-  ),
-  '16': (
-    #f79663,
-    #f8f6f1,
-  ),
-  '32': (
-    #f77d5f,
-    #f8f6f1,
-  ),
-  '64': (
-    #f75f3b,
-    #f8f6f1,
-  ),
-  '128': (
-    #edd073,
-    #f8f6f1,
-  ),
-  '256': (
-    #eecc61,
-    #f8f6f1,
-  ),
-  '512': (
-    grey,
-    #f8f6f1,
-  ),
-  '1024': (
-    black,
-    #f8f6f1,
-  ),
-  '2048': (
-    white,
-    #766e65,
-  ),
-);
+$colormap: (('empty' #ccc1b3, #ccc1b3), ('2', #ede4da, #766e65), ('4', #eee1c9, #766e65), ('8', #f3b379, #766e65), ('16', #f79663, #f8f6f1), ('32', #f77d5f, #f8f6f1), ('64', #f75f3b, #f8f6f1), ('128', #edd073, #f8f6f1), ('256', #eecc61, #f8f6f1), ('512', grey, #f8f6f1), ('1024', black, #f8f6f1), ('2048', white, #766e65));
 
-@each $name, $color in $colormap {
+@each $name, $color, $textColor in $colormap {
   .tile-num-#{$name} {
     background-color: $color;
+    color: $textColor;
   }
 } ;
