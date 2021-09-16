@@ -46,8 +46,8 @@ const Game = () => {
   }, []);
 
   return (
-    <div {...handlers} className='d-flex flex-column align-items-center' style={{ width: '100%' }}>
-      <Header {...gameData} handleAction={handleAction} />
+    <div {...handlers} className='d-flex flex-column align-items-center' style={{ width: '100%', height: '100vh' }}>
+      <Header {...gameData} handleUpdateAction={handleUpdateAction} />
       <Board tileData={tileData} gameData={gameData} />
     </div>
   );
