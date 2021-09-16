@@ -165,6 +165,7 @@ const Game = () => {
 
   useEffect(() => {
     handleAction(START);
+    // eslint-disable-next-line
   }, []);
 
   return (
