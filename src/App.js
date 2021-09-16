@@ -1,5 +1,5 @@
 import Game from './components/Game';
-
+import './App.scss';
 function App() {
   return <Game />;
 }

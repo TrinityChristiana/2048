@@ -1,5 +1,10 @@
 import { v4 } from 'uuid';
+import { DOWN, LEFT, RIGHT, START, UP } from '../../constants';
 
+export const defaultGameData = () => {
+  getHighScore();
+  return { xValue: 4, yValue: 4, score: 0, highScore: getHighScore() };
+};
 export const getRows = (gameData, tileData) => {
   const rows = Array.from(new Array(gameData.xValue)).map((_, x) => {
     const rowData = [];
@@ -40,7 +45,7 @@ const didTilesMove = (oldData, newData) => {
     }
     return tileChanged;
   });
-  return !!(changedTile);
+  return !!changedTile;
 };
 
 export const createRandomTile = (gameData, newTileData, oldTileData) => {
@@ -59,4 +64,131 @@ export const createRandomTile = (gameData, newTileData, oldTileData) => {
   });
   const randomEmptySpot = emptySpots[Math.floor(Math.random() * emptySpots.length)];
   return randomEmptySpot && { ...randomEmptySpot, value, id: v4() };
+};
+
+// export const defaultTileData = (gameData) => {
+//   const values = [0, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2040, 4096];
+
+//   const tileData = [];
+
+//   values.forEach((item, i, array) => {
+//     console.log(array);
+//   });
+//   const [x, y] = [Math.floor(Math.random() * gameData.xValue), Math.floor(Math.random() * gameData.yValue)];
+//   const value = [2, 4][Math.floor(Math.random() * 2)];
+//   return [
+//     { value: 0, x: 0, y: 0, id: v4() },
+//     { value: 2, x: 0, y: 1, id: v4() },
+//     { value: 4, x: 0, y: 2, id: v4() },
+//     { value: 8, x: 0, y: 3, id: v4() },
+//     { value: 16, x: 1, y: 0, id: v4() },
+//     { value: 32, x: 1, y: 1, id: v4() },
+//     { value: 64, x: 1, y: 2, id: v4() },
+//     { value: 128, x: 1, y: 3, id: v4() },
+//     { value: 256, x: 2, y: 0, id: v4() },
+//     { value: 512, x: 2, y: 1, id: v4() },
+//     { value: 1024, x: 2, y: 2, id: v4() },
+//     { value: 2048, x: 2, y: 3, id: v4() },
+//     { value: 4096, x: 3, y: 0, id: v4() },
+//   ];
+// };
+
+export const getHighScore = () => {
+  const highscore = window.localStorage.getItem('highscore');
+  if (highscore) {
+    return highscore;
+  } else {
+    window.localStorage.setItem('highscore', 0);
+    return 0;
+  }
+};
+
+export const updateHighScore = (score) => {
+  window.localStorage.setItem('highscore', score);
+};
+
+export const getBoardInformation = (gameData, tileData) => {
+  const rows = getRows(gameData, tileData);
+  const columns = getColumns(gameData, tileData);
+  const rowOrder = [...Array(gameData.yValue).keys()];
+  const columnOrder = [...Array(gameData.xValue).keys()];
+
+  return { rows, columns, rowOrder, columnOrder };
+};
+
+export const createNewTileData = ({ orientationData, orientationOrder, reverseOrientation, setGameData, positionKey }) => {
+  const newTileData = [];
+  orientationData.forEach((positionOption) => {
+    const loopOrder = [...orientationOrder];
+    if (positionOption.length) {
+      const posotionOrder = reverseOrientation ? [...positionOption].reverse() : positionOption;
+      posotionOrder.forEach((tile, i, array) => {
+        const nextTile = array[i + 1];
+        if (nextTile && tile.value === nextTile.value) {
+          array.splice(i + 1, 1);
+          tile.value *= 2;
+          setGameData((prev) => ({ ...prev, score: prev.score + tile.value }));
+        }
+        newTileData.push({ ...tile, [positionKey]: loopOrder[0] });
+        loopOrder.shift();
+      });
+    }
+  });
+
+  return newTileData;
+};
+
+export const handleAction = (actionType, setGameData, gameData, tileData, setTileData) => {
+  const { rows, columns, rowOrder, columnOrder } = getBoardInformation(gameData, tileData);
+  let newTileData = [];
+  switch (actionType) {
+    case UP:
+      newTileData = createNewTileData({
+        orientationData: columns,
+        orientationOrder: columnOrder,
+        reverseOrientation: false,
+        setGameData,
+        positionKey: 'x',
+      });
+      break;
+    case DOWN:
+      newTileData = createNewTileData({
+        orientationData: columns,
+        orientationOrder: [...columnOrder].reverse(),
+        reverseOrientation: true,
+        setGameData,
+        positionKey: 'x',
+      });
+      break;
+    case LEFT:
+      newTileData = createNewTileData({
+        orientationData: rows,
+        orientationOrder: rowOrder,
+        reverseOrientation: false,
+        setGameData,
+        positionKey: 'y',
+      });
+      break;
+    case RIGHT:
+      newTileData = createNewTileData({
+        orientationData: rows,
+        orientationOrder: [...rowOrder].reverse(),
+        reverseOrientation: true,
+        setGameData,
+        positionKey: 'y',
+      });
+      break;
+    case START:
+      newTileData = [];
+      break;
+    default:
+      newTileData = tileData;
+  }
+
+  if (!!newTileData.find((tile) => tile.value === 2048)) {
+    newTileData = [];
+  }
+  const newTile = createRandomTile(gameData, newTileData, tileData);
+  newTile && newTileData.push(newTile);
+  setTileData(newTileData);
 };
