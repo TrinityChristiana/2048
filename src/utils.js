@@ -44,7 +44,7 @@ const didTilesMove = (oldData, newData) => {
 };
 
 export const createRandomTile = (gameData, newTileData, oldTileData) => {
-  if (!didTilesMove(oldTileData, newTileData)) {
+  if (!didTilesMove(oldTileData, newTileData) && oldTileData.length) {
     return null;
   }
   const value = [2, 4][Math.floor(Math.random() * 2)];
