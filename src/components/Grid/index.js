@@ -11,7 +11,7 @@ const Grid = ({ tileData, gameData }) => {
           <div key={`grid-${x}`} className='d-flex'>
             {Array.from(new Array(gameData.yValue)).map((_, y) => {
               const tile = tileData.find((element) => element.x === x && element.y === y);
-              return <Tile value={tile ? tile.value : 0} />;
+              return <Tile key={`${x}-${y}`} value={tile ? tile.value : 0} />;
             })}
           </div>
         ))}
