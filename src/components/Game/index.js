@@ -4,6 +4,7 @@ import { DOWN, LEFT, RIGHT, START, UP, WIN } from '../../constants';
 import { createRandomTile, getColumns, getRows } from '../../utils';
 import Board from '../Board';
 import Buttons from '../Button';
+import Score from '../Score';
 
 // const defaultTileData = (gameData) => {
 //   const [x, y] = [Math.floor(Math.random() * gameData.xValue), Math.floor(Math.random() * gameData.yValue)];
@@ -25,7 +26,7 @@ import Buttons from '../Button';
 //   ];
 // };
 const defaultGameData = () => {
-  return { xValue: 4, yValue: 4 };
+  return { xValue: 4, yValue: 4, score: 0 };
 };
 const Game = () => {
   const [gameData] = useState(defaultGameData());
@@ -171,6 +172,7 @@ const Game = () => {
   return (
     <div {...handlers} className='d-flex flex-column align-items-center' style={{ width: '100%' }}>
       <Board tileData={tileData} gameData={gameData} />
+      <Score {...gameData} />
       <Buttons handleAction={handleAction} tileData={tileData} setTileData={setTileData} gameData={gameData} />
     </div>
   );

@@ -1,2 +1,2 @@
 - Add score
-- Add no creation if there were no blocks moved
+- Allow user to change size of board
