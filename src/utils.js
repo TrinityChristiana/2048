@@ -1,5 +1,5 @@
 import { v4 } from 'uuid';
-import { DOWN, LEFT, RIGHT, START, UP } from '../../constants';
+import { DOWN, LEFT, RIGHT, START, UP } from './constants';
 
 export const defaultGameData = () => {
   getHighScore();
@@ -96,7 +96,7 @@ export const createRandomTile = (gameData, newTileData, oldTileData) => {
 export const getHighScore = () => {
   const highscore = window.localStorage.getItem('highscore');
   if (highscore) {
-    return highscore;
+    return Number(highscore);
   } else {
     window.localStorage.setItem('highscore', 0);
     return 0;
@@ -127,7 +127,15 @@ export const createNewTileData = ({ orientationData, orientationOrder, reverseOr
         if (nextTile && tile.value === nextTile.value) {
           array.splice(i + 1, 1);
           tile.value *= 2;
-          setGameData((prev) => ({ ...prev, score: prev.score + tile.value }));
+          setGameData((prev) => {
+            const newScore = prev.score + tile.value;
+            const newObj = { ...prev, score: newScore };
+            if (newScore > prev.highScore) {
+              updateHighScore(newScore);
+              newObj.highScore = newScore;
+            }
+            return newObj;
+          });
         }
         newTileData.push({ ...tile, [positionKey]: loopOrder[0] });
         loopOrder.shift();
