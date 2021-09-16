@@ -1,0 +1,20 @@
+.app-button {
+  background-color: #8f7a65;
+  color: #f8f6f1;
+  border: none;
+}
+
+.direction-button {
+  color: red;
+  width: 50px;
+  height: 50px;
+  margin: 2px;
+
+
+  &-spacer {
+    width: 50px;
+    height: 50px;
+    clear: none;
+     margin: 2px;
+  }
+}
