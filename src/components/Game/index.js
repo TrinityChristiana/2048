@@ -1,22 +1,35 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
-import { v4 } from 'uuid';
-import { DOWN, LEFT, RIGHT, UP } from '../../constants';
+import { DOWN, LEFT, RIGHT, START, UP, WIN } from '../../constants';
 import { createRandomTile, getColumns, getRows } from '../../utils';
 import Board from '../Board';
 import Buttons from '../Button';
 
-const defaultTileData = (gameData) => {
-  const [x, y] = [Math.floor(Math.random() * gameData.xValue), Math.floor(Math.random() * gameData.yValue)];
-  const value = [2, 4][Math.floor(Math.random() * 2)];
-  return [{ value, x, y, id: v4() }];
-};
+// const defaultTileData = (gameData) => {
+//   const [x, y] = [Math.floor(Math.random() * gameData.xValue), Math.floor(Math.random() * gameData.yValue)];
+//   const value = [2, 4][Math.floor(Math.random() * 2)];
+//   return [
+//     { value: 0, x: 0, y: 0, id: v4() },
+//     { value: 2, x: 0, y: 1, id: v4() },
+//     { value: 4, x: 0, y: 2, id: v4() },
+//     { value: 8, x: 0, y: 3, id: v4() },
+//     { value: 16, x: 1, y: 0, id: v4() },
+//     { value: 32, x: 1, y: 1, id: v4() },
+//     { value: 64, x: 1, y: 2, id: v4() },
+//     { value: 128, x: 1, y: 3, id: v4() },
+//     { value: 256, x: 2, y: 0, id: v4() },
+//     { value: 512, x: 2, y: 1, id: v4() },
+//     { value: 1024, x: 2, y: 2, id: v4() },
+//     { value: 2048, x: 2, y: 3, id: v4() },
+//     { value: 4096, x: 3, y: 0, id: v4() },
+//   ];
+// };
 const defaultGameData = () => {
   return { xValue: 4, yValue: 4 };
 };
 const Game = () => {
   const [gameData] = useState(defaultGameData());
-  const [tileData, setTileData] = useState(defaultTileData(defaultGameData()));
+  const [tileData, setTileData] = useState([]);
 
   const handleAction = useCallback(
     (actionType) => {
@@ -90,6 +103,12 @@ const Game = () => {
             }
           });
           break;
+        case START:
+          newTileData = [];
+          break;
+        case WIN:
+          newTileData = tileData;
+          break;
         default:
           newTileData = tileData;
       }
@@ -143,6 +162,10 @@ const Game = () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [handleKeyDown]);
+
+  useEffect(() => {
+    handleAction(START);
+  }, []);
 
   return (
     <div {...handlers} className='d-flex flex-column align-items-center' style={{ width: '100%' }}>
