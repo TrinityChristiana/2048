@@ -1,3 +1,11 @@
+html,
+body,
+.scrollable {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: none;
+}
+
 .app-button {
   background-color: #8f7a65 !important;
   color: #f8f6f1;
