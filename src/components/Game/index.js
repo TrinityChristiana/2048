@@ -5,9 +5,13 @@ import { defaultGameData, handleAction } from '../../utils';
 import Board from '../Board';
 import Header from '../Header';
 
+const screenIsSmall = (size) => {
+  return size < 536;
+};
 const Game = () => {
   const [gameData, setGameData] = useState(defaultGameData());
   const [tileData, setTileData] = useState([]);
+  const [smallScreen, setSmallScreen] = useState(screenIsSmall(window.innerHeights));
 
   const handleUpdateAction = useCallback(
     (eventType) => {
@@ -35,6 +39,10 @@ const Game = () => {
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('resize', () => {
+      const height = window.innerHeight;
+      setSmallScreen(screenIsSmall(height));
+    });
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
@@ -46,7 +54,7 @@ const Game = () => {
   }, []);
 
   return (
-    <div {...handlers} className='d-flex flex-column align-items-center' style={{ width: '100%', height: '100vh' }}>
+    <div {...handlers} className={`d-flex ${!smallScreen ? 'flex-column align-items-center' : 'flex-row'}`} style={!smallScreen ? { width: '100%', height: '100vh' } : { marginLeft: 10, marginRight: 10 }}>
       <Header {...gameData} handleUpdateAction={handleUpdateAction} />
       <Board tileData={tileData} gameData={gameData} />
     </div>
