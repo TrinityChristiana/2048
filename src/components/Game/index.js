@@ -43,6 +43,14 @@ const Game = () => {
       const height = window.innerHeight;
       setSmallScreen(screenIsSmall(height));
     });
+    window.addEventListener(
+      'orientationchange',
+      function () {
+        const height = window.innerHeight;
+        setSmallScreen(screenIsSmall(height));
+      },
+      false
+    );
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
