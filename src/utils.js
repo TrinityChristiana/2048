@@ -188,6 +188,7 @@ export const handleAction = (actionType, setGameData, gameData, tileData, setTil
       break;
     case START:
       newTileData = [];
+      setGameData((prev) => ({ ...prev, score: 0 }));
       break;
     default:
       newTileData = tileData;
