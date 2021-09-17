@@ -194,9 +194,6 @@ export const handleAction = (actionType, setGameData, gameData, tileData, setTil
       newTileData = tileData;
   }
 
-  if (!!newTileData.find((tile) => tile.value === 2048)) {
-    newTileData = [];
-  }
   const newTile = createRandomTile(gameData, newTileData, tileData);
   newTile && newTileData.push(newTile);
   setTileData(newTileData);
