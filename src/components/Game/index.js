@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { START } from '../../constants';
+import { checkScreenSize } from '../../helpers/events';
 import { defaultGameData } from '../../helpers/gameUtils';
 import { handleAction } from '../../helpers/gameUtils';
+import { watchStorage } from '../../helpers/localStorageUtils';
 import Board from '../Board';
 import Header from '../Header';
 
@@ -40,18 +42,9 @@ const Game = () => {
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('resize', () => {
-      const height = window.innerHeight;
-      setSmallScreen(screenIsSmall(height));
-    });
-    window.addEventListener(
-      'orientationchange',
-      function () {
-        const height = window.innerHeight;
-        setSmallScreen(screenIsSmall(height));
-      },
-      false
-    );
+    window.addEventListener('resize', () => checkScreenSize(setSmallScreen));
+    window.addEventListener('orientationchange', () => checkScreenSize(setSmallScreen), false);
+    window.addEventListener('storage', watchStorage);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
