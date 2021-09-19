@@ -13,7 +13,7 @@ const screenIsSmall = (size) => {
 const Game = () => {
   const [gameData, setGameData] = useState(getGameData());
   const [tileData, setTileData] = useState([]);
-  const [smallScreen, setSmallScreen] = useState(screenIsSmall(window.innerHeights));
+  const [smallScreen, setSmallScreen] = useState(screenIsSmall(window.innerHeight));
 
   const handleUpdateAction = useCallback(
     (eventType) => {
@@ -47,7 +47,8 @@ const Game = () => {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [handleKeyDown]);
+    // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     const savedTileData = getTileData();
