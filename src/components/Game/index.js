@@ -2,9 +2,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { START } from '../../constants';
 import { checkScreenSize } from '../../helpers/events';
-import { defaultGameData } from '../../helpers/gameUtils';
 import { handleAction } from '../../helpers/gameUtils';
-import { watchStorage } from '../../helpers/localStorageUtils';
+import { getGameData, getTileData, updateGameData, updateTileData, watchStorage } from '../../helpers/localStorageUtils';
 import Board from '../Board';
 import Header from '../Header';
 
@@ -12,7 +11,7 @@ const screenIsSmall = (size) => {
   return size < 536;
 };
 const Game = () => {
-  const [gameData, setGameData] = useState(defaultGameData());
+  const [gameData, setGameData] = useState(getGameData());
   const [tileData, setTileData] = useState([]);
   const [smallScreen, setSmallScreen] = useState(screenIsSmall(window.innerHeights));
 
@@ -51,9 +50,22 @@ const Game = () => {
   }, [handleKeyDown]);
 
   useEffect(() => {
-    handleUpdateAction(START);
+    const savedTileData = getTileData();
+    if (savedTileData.length) {
+      setTileData(savedTileData);
+    } else {
+      handleUpdateAction(START);
+    }
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    tileData.length && updateTileData(tileData);
+  }, [tileData]);
+
+  useEffect(() => {
+    gameData && updateGameData(gameData);
+  }, [gameData]);
 
   return (
     <div {...handlers} className={`d-flex ${!smallScreen ? 'flex-column align-items-center' : 'flex-row'}`} style={!smallScreen ? { width: '100%', height: '100vh' } : { marginLeft: 10, marginRight: 10 }}>

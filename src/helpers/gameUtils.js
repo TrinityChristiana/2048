@@ -1,11 +1,9 @@
 import { DOWN, LEFT, RIGHT, START, UP } from '../constants';
 import { getBoardInformation } from './boardUtils';
-import { getHighScore } from './localStorageUtils';
 import { createNewTileData, createRandomTile } from './tileUtils';
 
 export const defaultGameData = () => {
-  getHighScore();
-  return { xValue: 4, yValue: 4, score: 0, highScore: getHighScore() };
+  return { xValue: 4, yValue: 4, score: 0, highScore: 0 };
 };
 
 export const handleAction = (actionType, setGameData, gameData, tileData, setTileData) => {
@@ -57,6 +55,7 @@ export const handleAction = (actionType, setGameData, gameData, tileData, setTil
   }
 
   const newTile = createRandomTile(gameData, newTileData, tileData);
+
   newTile && newTileData.push(newTile);
   setTileData(newTileData);
 };

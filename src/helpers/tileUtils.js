@@ -1,4 +1,3 @@
-import { updateHighScore } from './localStorageUtils';
 import { v4 } from 'uuid';
 
 export const createNewTileData = ({ orientationData, orientationOrder, reverseOrientation, setGameData, positionKey }) => {
@@ -16,7 +15,6 @@ export const createNewTileData = ({ orientationData, orientationOrder, reverseOr
             const newScore = prev.score + tile.value;
             const newObj = { ...prev, score: newScore };
             if (newScore > prev.highScore) {
-              updateHighScore(newScore);
               newObj.highScore = newScore;
             }
             return newObj;
