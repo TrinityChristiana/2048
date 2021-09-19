@@ -5,16 +5,9 @@ function App() {
   useEffect(() => {
     document.addEventListener('touchmove', (e) => {
       e.preventDefault();
-      e.stopPropagation()
+      e.stopPropagation();
     });
-    // $(function () {
-    //   $(document).on('touchmove', function (evt) {
-    //     evt.preventDefault();
-    //   });
-    //   $(document).on('touchmove', '.scrollable', function (evt) {
-    //     evt.stopPropagation();
-    //   });
-    // });
+
   }, []);
   return <Game />;
 }

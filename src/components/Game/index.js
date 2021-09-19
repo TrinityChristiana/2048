@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { START } from '../../constants';
-import { defaultGameData, handleAction } from '../../utils';
+import { defaultGameData } from '../../helpers/gameUtils';
+import { handleAction } from '../../helpers/gameUtils';
 import Board from '../Board';
 import Header from '../Header';
 
