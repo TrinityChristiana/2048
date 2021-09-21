@@ -3,13 +3,15 @@ import { Button } from 'reactstrap';
 import { START } from '../../constants';
 import './header.scss';
 
-const Score = ({ highScore, score, handleUpdateAction }) => {
+const Score = ({ highScore, score, handleUpdateAction, screenWidth }) => {
+  const normalWidth = 416;
+  const width = screenWidth >= normalWidth ? normalWidth - 26 : screenWidth - 26;
   return (
-    <div className='header-container'>
-      <div className="header-title-container">
+    <div className='header-container' style={{ width }}>
+      <div className='header-title-container'>
         <div className='header-title'>2048</div>
       </div>
-      <div className="header-info-container">
+      <div className='header-info-container'>
         <div className='all-scores-container'>
           <div className='score-container'>
             <div className='score-contents'>
@@ -24,7 +26,7 @@ const Score = ({ highScore, score, handleUpdateAction }) => {
             </div>
           </div>
         </div>
-        <div className="reset-button-container">
+        <div className='reset-button-container'>
           <Button onClick={() => handleUpdateAction(START)} className='app-button'>
             Restart <RefreshCcw />
           </Button>

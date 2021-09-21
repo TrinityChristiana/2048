@@ -1,8 +1,9 @@
 $header-height: 120px;
+
 .header-container {
   display: flex;
-  width: 390px;
-  height: $header-height;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .header-title {
@@ -17,11 +18,9 @@ $header-height: 120px;
 }
 .header-title-container {
   text-align: center;
-  width: 50%;
+  margin: 0 20px;
 }
-.header-info-container {
-  width: 50%;
-}
+
 .all-scores-container {
   display: flex;
   justify-content: space-around;
@@ -33,6 +32,7 @@ $header-height: 120px;
   font-weight: bold;
   border-radius: 3px;
   text-align: center;
+  margin: 0 5px;
 }
 
 .score-value {

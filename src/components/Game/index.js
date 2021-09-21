@@ -73,7 +73,7 @@ const Game = () => {
 
   return (
     <div {...handlers} className={`d-flex ${!smallScreen ? 'flex-column align-items-center' : 'flex-row'}`} style={!smallScreen ? { width: '100%', height: '100vh' } : { marginLeft: 10, marginRight: 10 }}>
-      <Header {...gameData} handleUpdateAction={handleUpdateAction} />
+      <Header {...gameData} screenWidth={screenWidth} handleUpdateAction={handleUpdateAction} />
       <Board screenWidth={screenWidth} tileData={tileData} gameData={gameData} />
     </div>
   );
