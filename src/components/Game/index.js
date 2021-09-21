@@ -14,6 +14,7 @@ const Game = () => {
   const [gameData, setGameData] = useState(getGameData());
   const [tileData, setTileData] = useState([]);
   const [smallScreen, setSmallScreen] = useState(screenIsSmall(window.innerHeight));
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
   const handleUpdateAction = useCallback(
     (eventType) => {
@@ -41,8 +42,10 @@ const Game = () => {
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('resize', () => checkScreenSize(setSmallScreen));
-    window.addEventListener('orientationchange', () => checkScreenSize(setSmallScreen), false);
+    // window.addEventListener('resize', () => {
+    //   checkScreenSize(setSmallScreen, setScreenWidth);
+    // });
+    // window.addEventListener('orientationchange', () => checkScreenSize(setSmallScreen, setScreenWidth), false);
     window.addEventListener('storage', watchStorage);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
@@ -71,7 +74,7 @@ const Game = () => {
   return (
     <div {...handlers} className={`d-flex ${!smallScreen ? 'flex-column align-items-center' : 'flex-row'}`} style={!smallScreen ? { width: '100%', height: '100vh' } : { marginLeft: 10, marginRight: 10 }}>
       <Header {...gameData} handleUpdateAction={handleUpdateAction} />
-      <Board tileData={tileData} gameData={gameData} />
+      <Board screenWidth={screenWidth} tileData={tileData} gameData={gameData} />
     </div>
   );
 };
