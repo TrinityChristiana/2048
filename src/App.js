@@ -10,7 +10,7 @@ function App() {
   }, []);
   return (
     <>
-      <a href='https://github.com/TrinityChristiana/2048' target='_blank'>
+      <a href='https://github.com/TrinityChristiana/2048' target='_blank' rel="noreferrer">
         README.md
       </a>
       <Game />
