@@ -8,7 +8,14 @@ function App() {
       e.stopPropagation();
     });
   }, []);
-  return <Game />;
+  return (
+    <>
+      <a href='https://github.com/TrinityChristiana/2048' target='_blank'>
+        README.md
+      </a>
+      <Game />
+    </>
+  );
 }
 
 export default App;
