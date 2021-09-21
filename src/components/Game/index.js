@@ -42,16 +42,16 @@ const Game = () => {
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
-    // window.addEventListener('resize', () => {
-    //   checkScreenSize(setSmallScreen, setScreenWidth);
-    // });
-    // window.addEventListener('orientationchange', () => checkScreenSize(setSmallScreen, setScreenWidth), false);
+    window.addEventListener('resize', () => {
+      checkScreenSize(setSmallScreen, setScreenWidth);
+    });
+    window.addEventListener('orientationchange', () => checkScreenSize(setSmallScreen, setScreenWidth), false);
     window.addEventListener('storage', watchStorage);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
     // eslint-disable-next-line
-  }, []);
+  }, [tileData, gameData]);
 
   useEffect(() => {
     const savedTileData = getTileData();
